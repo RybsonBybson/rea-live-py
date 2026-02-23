@@ -2,15 +2,16 @@ import asyncio
 import websockets
 from settings import *
 
-async def handler(websocket):
+async def handler(websocket: websockets.ServerConnection):
     print("Ktoś się podłączył")
 
-    while True:
-        msg = await websocket.recv()
-        print("Odebrano:", msg)
+    try:
+        async for msg in websocket:
+            print("Odebrano:", msg)
+            await websocket.send("ok")
 
-        reply = input("Ty: ")
-        await websocket.send(reply)
+    except websockets.ConnectionClosed:
+        print("Klient się rozłączył")
 
 async def main():
     async with websockets.serve(handler, "0.0.0.0", PORT):
