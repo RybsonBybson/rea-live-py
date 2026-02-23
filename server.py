@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+from settings import *
 
 async def handler(websocket):
     print("Ktoś się podłączył")
@@ -12,8 +13,8 @@ async def handler(websocket):
         await websocket.send(reply)
 
 async def main():
-    async with websockets.serve(handler, "0.0.0.0", 8765):
-        print("Serwer działa na porcie 8765")
+    async with websockets.serve(handler, "0.0.0.0", PORT):
+        print(f"Serwer działa na porcie {PORT}")
         await asyncio.Future()  # działa w nieskończoność
 
 asyncio.run(main())
