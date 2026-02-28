@@ -6,7 +6,6 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     "package-lock.json": true,
-    "README.md": true,
     ".gitattributes": true,
     "node_modules": true,
     ".vscode": true,
@@ -21,7 +20,6 @@
   },
   "hide-files.files": [
     "package-lock.json",
-    "README.md",
     ".gitattributes",
     "node_modules",
     ".vscode",
