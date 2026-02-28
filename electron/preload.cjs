@@ -1,5 +1,15 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
-  sendMessage: (msg) => ipcRenderer.invoke("sendMessage", msg),
+  // -- test
+  sendMessage: msg => ipcRenderer.invoke("sendMessage", msg),
+  // -- window
+  minimalize: () => ipcRenderer.invoke("win_minimalize"),
+  minmax: () => ipcRenderer.invoke("win_minmax"),
+  close: () => ipcRenderer.invoke("win_close"),
+  pin: () => ipcRenderer.invoke("win_pin"),
+  onWindowState: callback => ipcRenderer.on("win_state", (_, state) => callback(state)),
+  onPinned: callback => ipcRenderer.on("win_pinned", (_, state) => callback(state)),
+  // -- reaper
+  isReaperOn: () => ipcRenderer.invoke("rea_ison"),
 });

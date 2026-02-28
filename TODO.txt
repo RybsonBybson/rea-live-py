@@ -8,6 +8,6 @@ Static web with download    | 🟥
 ---- DEV
 
 Detect Reaper project       | 🟩
-Add settings                | 🟥
-Add frame                   | 🟥
+Add menu                    | 🟩
+Add frame                   | 🟩
 Add Google Acccount login   | 🟥

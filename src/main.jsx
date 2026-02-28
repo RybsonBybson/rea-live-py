@@ -1,10 +1,25 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode, useState } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import Frame from "./templates/Frame";
+import ReaperConsole from "./pages/ReaperConsole";
+import SettingsPage from "./pages/SettingsPage";
+import { SiteContext } from "./SiteContext";
 
-createRoot(document.getElementById('root')).render(
+function Main() {
+  const [site, setSite] = useState("reaconsole");
+
+  return (
+    <SiteContext.Provider value={{ site, setSite }}>
+      <Frame />
+      {site === "reaconsole" && <ReaperConsole />}
+      {site === "settings" && <SettingsPage />}
+    </SiteContext.Provider>
+  );
+}
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <Main />
   </StrictMode>,
-)
+);

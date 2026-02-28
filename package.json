@@ -4,12 +4,14 @@
   "version": "indev",
   "main": "electron\\app.cjs",
   "scripts": {
-    "dev": "concurrently \"vite\" \"electron .\"",
+    "dev": "concurrently --kill-others \"vite\" \"electron .\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "googleapis": "^171.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

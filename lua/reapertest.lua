@@ -1,5 +1,13 @@
+local json = require('dkjson')
 
 --
+function ParentFolder(path)
+    if path:sub(-1) == "/" or path:sub(-1) == "\\" then
+        return path:match("^(.*)[\\/][^\\/]+[\\/]?$")
+    else
+        return path:match("^(.*[\\/])")
+    end
+end
 
 
 local r = reaper
@@ -7,30 +15,20 @@ local r = reaper
 local black = r.ColorToNative(0, 0, 0)
 local last_time = 0
 local delay = 1.0
+local _, script_path = r.get_action_context()
+local dir_path = ParentFolder(script_path)
+local communication_path = ParentFolder(dir_path) .. "/communicate.json"
 
-function Add_Nigga()
-    local now = r.time_precise()
-    if now - last_time >= delay then
-        local trackIndex = r.CountTracks(0)
-        r.InsertTrackAtIndex(trackIndex, true)
-        local track = r.GetTrack(0, trackIndex)
-        local iconPath = "C:\\Users\\user\\Documents\\GitHub\\rea-live-py\\lua\\blackguy.jpg"
+local file = io.open(communication_path, 'r')
+if file then
+    local text = file:read("*a")
+    file:close()
 
-        r.GetSetMediaTrackInfo_String(track, "P_NAME", "NIGGER", true)
-        r.GetSetMediaTrackInfo_String(track, "P_ICON", iconPath, true)
-        r.SetTrackColor(track, black)
-
-        r.TrackList_AdjustWindows(false)
-        r.UpdateArrange()
-        last_time = now
+    local obj = json.decode(text)
+    if obj then
+        reaper.ShowConsoleMsg(obj.connection and "True" or "False")
+    else
+        reaper.ShowConsoleMsg(text)
     end
-
-    r.defer(Add_Nigga)
-
 end
 
---
-
-Add_Nigga()
-
---
