@@ -19,6 +19,11 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Set Git identity
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
       - name: Deploy Static Page
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
