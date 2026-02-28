@@ -11,12 +11,13 @@
     "node_modules": true,
     ".vscode": true,
     "__pycache__": true,
-    "vite.config.js": true,
     ".vs": true,
     "index.html": true,
     ".gitignore": true,
-    "package.json": true,
-    ".prettierrc": true
+    ".prettierrc": true,
+    "vite.config.js": true,
+    "server/package.json": true,
+    "package.json": true
   },
   "hide-files.files": [
     "package-lock.json",
@@ -25,12 +26,13 @@
     "node_modules",
     ".vscode",
     "__pycache__",
-    "vite.config.js",
     ".vs",
     "index.html",
     ".gitignore",
-    "package.json",
-    ".prettierrc"
+    ".prettierrc",
+    "vite.config.js",
+    "server/package.json",
+    "package.json"
   ],
   "Lua.workspace.preloadFileSize": 1024,
   "lua_analyzer.codeLinting.enable": false,

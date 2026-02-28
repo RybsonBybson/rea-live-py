@@ -7,7 +7,9 @@ Static web with download    | 🟥
 
 ---- DEV
 
-Detect Reaper project       | 🟩
-Add menu                    | 🟩
 Add frame                   | 🟩
-Add Google Acccount login   | 🟥
+Add menu                    | 🟩
+Detect Reaper project       | 🟩
+Detect Reaper script        | 🟩
+Split to server/static      | 🟥
+Add Websockets              | 🟥

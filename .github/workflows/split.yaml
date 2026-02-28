@@ -1,0 +1,40 @@
+name: Split Branches
+on:
+  push:
+    branches:
+      - main # obserwujemy main
+
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+      - name: Split static folder to static branch
+        run: |
+          git checkout -B static
+          git rm -r --cached server || true
+          git rm -r --cached $(ls | grep -v '^static$') || true
+          git add static
+          git commit -m "Update static branch" || echo "Nothing to commit"
+          git push origin static --force
+
+      - name: Split server folder to server branch
+        run: |
+          git checkout -B server
+          git rm -r --cached static || true
+          git rm -r --cached $(ls | grep -v '^server$') || true
+          git add server
+          git commit -m "Update server branch" || echo "Nothing to commit"
+          git push origin server --force
+
+      - name: Return to main
+        run: git checkout main

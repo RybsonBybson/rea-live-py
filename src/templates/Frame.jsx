@@ -1,7 +1,10 @@
 import { AppWindowIcon, CardsIcon, ListIcon, MinusIcon, PushPinIcon, RectangleIcon, UserCircleIcon, UserIcon, XIcon } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { SiteContext } from "../SiteContext";
 
 export default function Frame() {
+  const { setSite } = useContext(SiteContext);
+
   const [menuExists, setMenuExists] = useState(false);
   // const [menuVisible, setMenuVisible] = useState(false);
   const [status, setStatus] = useState("restored");
@@ -38,7 +41,11 @@ export default function Frame() {
           </button>
         )}
         <button onClick={window.api.pin}>{!pinned ? <PushPinIcon /> : <PushPinIcon weight='fill' />}</button>
-        <button className='account'>
+        <button
+          className='click'
+          onClick={() => {
+            setSite("settings");
+          }}>
           <UserCircleIcon />
         </button>
       </div>

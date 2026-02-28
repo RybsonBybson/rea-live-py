@@ -1,24 +1,47 @@
-import { useEffect, useRef, useState } from "react";
 import Menu from "../templates/Menu";
 import settings from "settings";
-import { GearIcon, PaintBrushIcon } from "@phosphor-icons/react";
+import { HardDrivesIcon, PaintBrushIcon, UserIcon } from "@phosphor-icons/react";
 
 export default function SettingsPage() {
+  const save = () => {
+    window.api.saveSettings(settings);
+  };
+
+  const setName = e => {
+    settings.user.name = e.target.value;
+    save();
+  };
+
+  const setPort = e => {
+    settings.server.port = e.target.value;
+    save();
+  };
+
   return (
     <main>
       <Menu />
       <div className='area'>
         <h3>
-          <GearIcon /> General
+          <UserIcon /> Account
         </h3>
-        <div className='settings-item'>
-          <p>Connect to Google</p>
-          
-        </div>
         <hr />
+        <div className='settings-item'>
+          <label>Nickname</label>
+          <input type='text' placeholder='Your nickname...' defaultValue={settings.user.name} onInput={setName} />
+        </div>
         <h3>
           <PaintBrushIcon /> Look
         </h3>
+        <hr />
+        <h3>
+          <HardDrivesIcon /> Server
+        </h3>
+        <hr />
+        <div className='settings-item'>
+          <label>Port</label>
+          <input type='number' placeholder='Port...' defaultValue={settings.server.port} onInput={setPort} />
+        </div>
+
         <div className='settings-item'></div>
       </div>
     </main>

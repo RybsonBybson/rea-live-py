@@ -1,1 +1,12 @@
-{ "app": { "name": "Rea-Multiplayer", "shortened": "rea-multi" }, "server": { "port": 5173 } }
+{
+  "server": {
+    "port": "5173"
+  },
+  "app": {
+    "name": "Rea-multiplayer",
+    "shortened": "rea-multi"
+  },
+  "user": {
+    "name": "Ryba"
+  }
+}

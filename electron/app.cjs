@@ -3,18 +3,22 @@ const path = require("path");
 const settings = require("../settings.json");
 const { exec } = require("child_process");
 const { promisify } = require("util");
-
+const fs = require("fs");
+const { settingscheck } = require("./settingscheck.cjs");
 const execAsync = promisify(exec);
-const port = settings.server.port;
-const appName = settings.app.name;
+settingscheck();
 
+const settingsPath = path.join(__dirname, "..", "settings.json");
+const communicatePath = path.join(__dirname, "..", "communicate.json");
+
+const port = settings.server.port;
 const url = `http://localhost:${port}`;
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    title: appName,
+    title: settings.app.name,
     webPreferences: { preload: path.join(__dirname, "preload.cjs"), contextIsolation: true, nodeIntegration: false },
     backgroundMaterial: "acrylic",
     frame: false,
@@ -37,6 +41,12 @@ app.whenReady().then(() => {
 
 ipcMain.handle("sendMessage", async (event, data) => {
   return "Odebrano!";
+});
+
+// -- settings related
+
+ipcMain.handle("sett_save", (event, settings) => {
+  fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2), "utf-8");
 });
 
 // ---- window related
@@ -65,4 +75,10 @@ ipcMain.handle("rea_ison", async event => {
   const { stdout } = await execAsync("tasklist");
 
   return stdout.includes("reaper.exe");
+});
+
+ipcMain.handle("rea_isconn", event => {
+  const communicate = JSON.parse(fs.readFileSync(communicatePath, "utf-8"));
+
+  return communicate.connection;
 });
