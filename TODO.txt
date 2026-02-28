@@ -1,0 +1,13 @@
+---- START
+
+Setup project               | 🟩
+Acrylic window              | 🟩
+Installer build setup       | 🟥
+Static web with download    | 🟥
+
+---- DEV
+
+Detect Reaper project       | 🟩
+Add settings                | 🟥
+Add frame                   | 🟥
+Add Google Acccount login   | 🟥

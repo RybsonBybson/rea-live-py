@@ -1,0 +1,35 @@
+html,
+body,
+#root {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+
+  --font-color: 255, 255, 255;
+  --background-color: 17, 17, 17;
+  --background-opacity: 0.4;
+
+  color: var(--font-color);
+  background-color: rgba(var(--background-color), var(--background-opacity));
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  height: 100%;
+}
+
+.col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+}
