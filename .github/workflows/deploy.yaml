@@ -28,21 +28,23 @@ jobs:
 
       - name: Push server-only branch
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          # Pobierz main branch lokalnie
+          git fetch origin main
+          git checkout main
 
-          # Tworzymy pusty branch (orphan) – nie dziedziczy main
+          # Tworzymy orphan branch server
           git checkout --orphan server
 
-          # Usuń wszystkie pliki z indexu
+          # Usuń wszystko z pustego branchu
           git rm -rf . || true
 
-          # Dodaj tylko folder server
-          if [ -d "server" ]; then
-            cp -r server/* .
-            git add .
-            git commit -m "Initial commit with server content"
-            git push origin server --force
-          else
-            echo "Folder server nie istnieje, branch server nie zostanie utworzony"
-          fi
+          # Skopiuj folder server z maina do katalogu głównego
+          git checkout main -- server
+
+          # Przenieś pliki z folderu server do root branchu
+          mv server/* .
+          rm -rf server
+
+          git add .
+          git commit -m "Initial commit with server content"
+          git push origin server --force
