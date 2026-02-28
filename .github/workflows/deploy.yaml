@@ -26,9 +26,20 @@ jobs:
           publish_dir: ./static
           publish_branch: static
 
-      - name: Deploy Server
-        uses: peaceiris/actions-gh-pages@v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./server
-          publish_branch: server
+      - name: Push server branch
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          # Sprawdzenie, czy branch istnieje zdalnie
+          if git ls-remote --heads origin server | grep server; then
+          git fetch origin server
+          git checkout server
+          else
+          git checkout -B server
+          fi
+
+          # Dodaj pliki serwera
+          git add server package.json server.js
+          git commit -m "Update server branch" || echo "Nothing to commit"
+          git push origin server --force
