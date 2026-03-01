@@ -1,6 +1,6 @@
 import Menu from "../templates/Menu";
 import settings from "settings";
-import { HardDrivesIcon, PaintBrushIcon, UserIcon } from "@phosphor-icons/react";
+import { AppWindowIcon, HardDrivesIcon, PaintBrushIcon, UserIcon } from "@phosphor-icons/react";
 
 export default function SettingsPage() {
   const save = () => {
@@ -31,6 +31,10 @@ export default function SettingsPage() {
         </div>
         <h3>
           <PaintBrushIcon /> Look
+        </h3>
+        <hr />
+        <h3>
+          <AppWindowIcon /> App
         </h3>
         <hr />
         <h3>

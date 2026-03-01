@@ -1,6 +1,6 @@
 import { AppWindowIcon, CardsIcon, ListIcon, MinusIcon, PushPinIcon, RectangleIcon, UserCircleIcon, UserIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useContext } from "react";
-import { SiteContext } from "../SiteContext";
+import { SiteContext } from "../contexts/contexts";
 
 export default function Frame() {
   const { setSite } = useContext(SiteContext);

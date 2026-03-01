@@ -8,5 +8,9 @@
   },
   "user": {
     "name": "Ryba"
+  },
+  "prefs": {
+    "hideToTray": false,
+    "refreshDelay": 1000
   }
 }

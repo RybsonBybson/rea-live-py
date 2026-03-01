@@ -11,5 +11,5 @@ Add frame                   | 🟩
 Add menu                    | 🟩
 Detect Reaper project       | 🟩
 Detect Reaper script        | 🟩
-Split to server/static      | 🟥
+Split to server/static      | 🟩
 Add Websockets              | 🟥

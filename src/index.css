@@ -17,13 +17,19 @@ body,
   --dark: 17, 17, 17;
   --dark-highlight: 30, 30, 30;
   --gray-dark: 50, 50, 50;
+  --gray: 100, 100, 100;
+  --gray-light: 150, 150, 150;
   --close-app-red: 232, 17, 35;
+  --track-color: 91, 91, 91;
+  --track-btn-on: 238, 69, 69;
+  --track-text-color: black;
 
   --menu-width: 12rem;
 
   color: rgb(var(--font-color));
   background-color: rgba(var(--dark), var(--background-opacity));
 
+  user-select: none;
   font-family: "Google Sans";
   overflow: hidden;
   display: flex;
@@ -145,7 +151,7 @@ menu {
   button {
     aspect-ratio: 1;
     height: 3rem;
-    color: rgb(var(--font-color));
+    color: rgb(var(--gray-light));
     font-size: 100%;
     transition:
       0.2s background-color,
@@ -186,7 +192,7 @@ menu {
   padding: 0.2rem 1%;
   height: 3rem;
   gap: 3rem;
-  color: rgba(var(--font-color), var(--background-opacity));
+  color: rgb(var(--gray-light));
 
   label {
     font-weight: lighter;
@@ -199,4 +205,88 @@ menu {
 
 .click {
   cursor: pointer;
+}
+
+.console {
+  display: flex;
+  flex: 1;
+
+  .col {
+    height: 100%;
+    width: 100%;
+    gap: 1px;
+  }
+
+  .tracks {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 1px;
+  }
+}
+
+.track {
+  width: 100%;
+  min-height: 1rem;
+  max-height: 20%;
+  background-color: rgb(var(--track-color));
+  padding: 0.4rem 0.6rem;
+  display: flex;
+  justify-content: center;
+  font-family: "system-ui";
+  font-weight: lighter;
+  box-sizing: border-box;
+  gap: 0.6rem;
+
+  .number {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5%;
+    border-right: solid 1px var(--track-text-color);
+    color: var(--track-text-color);
+  }
+
+  .trackname {
+    border-radius: 100px;
+    background-color: rgb(var(--dark-highlight));
+    padding: 0.6rem 0.8rem;
+    font-size: 80%;
+    flex: 1;
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+
+    button {
+      padding: 0;
+      border-radius: 100%;
+      aspect-ratio: 1;
+      height: 50%;
+      background-color: transparent;
+      box-shadow: 0 0 0 0.2rem rgb(var(--gray-light));
+      filter: brightness(100%);
+    }
+
+    button.on {
+      box-shadow: 0 0 0 0.2rem rgb(var(--track-btn-on));
+    }
+
+    button:hover {
+      filter: brightness(140%);
+    }
+
+    .tracklabel {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+      flex: 1;
+    }
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
 }

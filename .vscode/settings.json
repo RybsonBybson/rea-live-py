@@ -16,7 +16,10 @@
     ".prettierrc": true,
     "vite.config.js": true,
     "server/package.json": true,
-    "package.json": true
+    "package.json": true,
+    "README.md": true,
+    ".github": true,
+    "static": true
   },
   "hide-files.files": [
     "package-lock.json",
@@ -30,7 +33,10 @@
     ".prettierrc",
     "vite.config.js",
     "server/package.json",
-    "package.json"
+    "package.json",
+    "README.md",
+    ".github",
+    "static"
   ],
   "Lua.workspace.preloadFileSize": 1024,
   "lua_analyzer.codeLinting.enable": false,

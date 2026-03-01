@@ -1,6 +1,6 @@
-import { CardsIcon, GearIcon, HouseIcon, ListIcon, MinusIcon, XIcon } from "@phosphor-icons/react";
+import { CardsIcon, DoorOpenIcon, GearIcon, HouseIcon, ListIcon, MinusIcon, XIcon } from "@phosphor-icons/react";
 import { useContext } from "react";
-import { SiteContext } from "../SiteContext";
+import { SiteContext } from "../contexts/contexts";
 
 export default function Menu() {
   const { setSite } = useContext(SiteContext);
@@ -24,7 +24,12 @@ export default function Menu() {
         </button>
       </div>
 
-      <div className='bottom'></div>
+      <div className='bottom'>
+        <button onClick={window.api.destroy}>
+          <DoorOpenIcon />
+          Close App
+        </button>
+      </div>
     </menu>
   );
 }
