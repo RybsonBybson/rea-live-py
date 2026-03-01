@@ -1,8 +1,9 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
-  // -- test
-  sendMessage: msg => ipcRenderer.invoke("sendMessage", msg),
+  // -- other
+  sendMessage: msg => ipcRenderer.invoke("o_sendmessage", msg),
+  imageFromOutside: p => ipcRenderer.invoke("o_imagefromoutside", p),
   // -- settings
   saveSettings: settings => ipcRenderer.invoke("sett_save", settings),
   // -- window

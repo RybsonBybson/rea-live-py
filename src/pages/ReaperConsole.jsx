@@ -17,9 +17,22 @@ export default function ReaperConsole() {
               <h3>Choose which tracks to send</h3>
               <hr />
               <div className='tracks'>
-                {communication.tracks.map((track, index) => (
-                  <Track key={index} i={index + 1} name={track.name} color={track.color} />
-                ))}
+                <div className='container'>
+                  {communication.tracks.map((track, index) => (
+                    <Track
+                      key={index}
+                      i={index + 1}
+                      hasName={track.name.hasName}
+                      name={track.name.name}
+                      hasColor={track.color.hasColor}
+                      r={track.color.r}
+                      g={track.color.g}
+                      b={track.color.b}
+                      hasIcon={track.icon.hasIcon}
+                      icon={track.icon.icon}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
             <div className='col'>

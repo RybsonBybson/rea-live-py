@@ -14,6 +14,7 @@ end
 local _, script_path = r.get_action_context()
 local dir_path = ParentFolder(script_path)
 local communication_path = ParentFolder(dir_path) .. "/communicate.json"
+local resourcePath = ParentFolder(r.GetProjectPath())
 
 --
 
@@ -36,8 +37,6 @@ function save_communication(obj)
     file:close()
 end
 
-
-
 function setconnection(value)
     local comm = get_communication()
     comm.connection = value;
@@ -48,22 +47,40 @@ function setconnection(value)
     save_communication(comm)
 end
 
+function atexit()
+    setconnection(false)
+    _G['script_running'] = false
+end
+
 function scantracks()
     local comm = get_communication()
     if not comm then return end
+
     local tracksAmount = r.CountTracks(0)
+    local existingGuids = {}
 
     for i = 1, tracksAmount do
         local track = r.GetTrack(0, i - 1)
         local guid = r.GetTrackGUID(track)
-        local _, name = r.GetTrackName(track)
+        existingGuids[guid] = true
+
+        local hasName, name = r.GetTrackName(track)
         local color = r.GetTrackColor(track)
+        local cr, cg, cb = r.ColorFromNative(color)
+        local hasColor = color ~= 0
+        local _, icon = reaper.GetSetMediaTrackInfo_String(track, "P_ICON", "", false)
+        local hasIcon = icon ~= ""
+
+        if hasIcon and not icon:match("^[A-Za-z]:") then
+            icon = resourcePath .. '/' .. icon
+        end
 
         local found = false
         for index, value in ipairs(comm.tracks) do
             if value.guid == guid then
-                value.name = name
-                value.color = color
+                value.name = {hasName = hasName, name = name}
+                value.color = {hasColor = hasColor, r = cr, g = cg, b = cb}
+                value.icon = {hasIcon = hasIcon, icon = icon}
                 found = true
                 break
             end
@@ -71,19 +88,29 @@ function scantracks()
 
         if not found then
             table.insert(comm.tracks, {
-                name = name,
-                color = color,
+                name = {hasName = hasName, name = name},
+                color = {hasColor = hasColor, r = cr, g = cg, b = cb},
+                icon = {hasIcon = hasIcon, icon = icon},
                 guid = guid,
                 syncing = false
             })
         end
     end
 
+    local newTracks = {}
+    for _, value in ipairs(comm.tracks) do
+        if existingGuids[value.guid] then
+            table.insert(newTracks, value)
+        end
+    end
+    comm.tracks = newTracks
 
     save_communication(comm)
 end
 
 function main()
+    if not _G["script_running"] then r.ShowMessageBox("elo", "s", 0) return end
+
     local time = r.time_precise()
     if last_time + delay < time then
         scantracks()
@@ -99,9 +126,11 @@ end
 --
 
 
+if not _G['script_running'] then _G['script_running'] = true
+else atexit() end
+
 setconnection(true)
+r.ShowMessageBox(_G['script_running'] and "Reaper Connection ON" or "Reaper Connection OFF", "Connection", 0)
 main()
 
-r.atexit(function ()
-    setconnection(false)
-end)
+r.atexit(atexit)

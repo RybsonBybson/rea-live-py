@@ -25,6 +25,7 @@ body,
   --track-text-color: black;
 
   --menu-width: 12rem;
+  --frame-height: 3rem;
 
   color: rgb(var(--font-color));
   background-color: rgba(var(--dark), var(--background-opacity));
@@ -91,7 +92,7 @@ input[type="number"]:focus {
 
   button {
     aspect-ratio: 1;
-    height: 3rem;
+    height: var(--frame-height);
     color: rgb(var(--font-color));
     font-size: 100%;
     transition: 0.2s background-color;
@@ -119,7 +120,9 @@ main {
 
   .area {
     padding: 4%;
-    flex: 1;
+    width: 100%;
+    height: calc(100vh - var(--frame-height) - 4%);
+    overflow: hidden;
 
     h3 {
       font-weight: normal;
@@ -209,26 +212,30 @@ menu {
 
 .console {
   display: flex;
-  flex: 1;
+  height: 90%;
 
   .col {
     height: 100%;
     width: 100%;
-    gap: 1px;
-  }
 
-  .tracks {
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    gap: 1px;
+    .tracks {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-color: rgb(var(--gray-dark)) transparent;
+      scrollbar-width: thin;
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+    }
   }
 }
 
 .track {
   width: 100%;
-  min-height: 1rem;
-  max-height: 20%;
+  height: 3.2rem;
   background-color: rgb(var(--track-color));
   padding: 0.4rem 0.6rem;
   display: flex;
@@ -262,14 +269,14 @@ menu {
       padding: 0;
       border-radius: 100%;
       aspect-ratio: 1;
-      height: 50%;
+      height: 100%;
       background-color: transparent;
-      box-shadow: 0 0 0 0.2rem rgb(var(--gray-light));
+      border: solid 0.3rem rgb(var(--gray-light));
       filter: brightness(100%);
     }
 
     button.on {
-      box-shadow: 0 0 0 0.2rem rgb(var(--track-btn-on));
+      border-color: rgb(var(--track-btn-on));
     }
 
     button:hover {
@@ -283,6 +290,11 @@ menu {
       min-width: 0;
       flex: 1;
     }
+  }
+
+  img {
+    height: 100%;
+    aspect-ratio: 1;
   }
 }
 

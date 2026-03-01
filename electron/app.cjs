@@ -2,10 +2,12 @@ const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
 const path = require("path");
 let settings = require("../settings.json");
 const { settingscheck } = require("./settingscheck.cjs");
+const { protocol } = require("electron");
 
 settingscheck();
-const settingsPath = path.join(__dirname, "..", "settings.json");
-const communicatePath = path.join(__dirname, "..", "communicate.json");
+const settingsPath = path.join(app.getAppPath(), "settings.json");
+const communicatePath = path.join(app.getAppPath(), "communicate.json");
+const publicFolder = path.join(app.getAppPath(), "public");
 
 const port = settings.server.port;
 const url = `http://localhost:${port}`;
@@ -35,7 +37,7 @@ function createWindow() {
 function createTray() {
   if (!mainWin) return;
 
-  tray = new Tray(path.join(__dirname, "..", "public/rea-multi.png"));
+  tray = new Tray(path.join(publicFolder, "rea-multi.png"));
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -75,11 +77,11 @@ app.whenReady().then(() => {
 // -- apis
 
 const { windowRelated } = require("./api/window.cjs");
-const { testrelated } = require("./api/test.cjs");
+const { otherRelated } = require("./api/other.cjs");
 const { settingsRelated } = require("./api/settings.cjs");
 const { reaperRelated } = require("./api/reaper.cjs");
 
-testrelated();
+otherRelated();
 windowRelated(settings);
 settingsRelated(settings, settingsPath);
 reaperRelated(communicatePath);
