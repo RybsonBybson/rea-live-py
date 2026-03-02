@@ -24,10 +24,12 @@ function connectWS() {
 
   ws.on("open", () => {
     isConnected = true;
-    ws.send({
-      username: settings.user.name,
-      type: "join_request",
-    });
+    ws.send(
+      JSON.stringify({
+        username: settings.user.name,
+        type: "join_request",
+      }),
+    );
   });
 
   ws.on("close", () => {
