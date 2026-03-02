@@ -15,7 +15,6 @@ contextBridge.exposeInMainWorld("api", {
   onPinned: callback => ipcRenderer.on("win_pinned", (_, state) => callback(state)),
   // -- reaper
   isReaperOn: () => ipcRenderer.invoke("rea_ison"),
-  isConnection: () => ipcRenderer.invoke("rea_isconn"),
   communication: () => ipcRenderer.invoke("rea_comms"),
   setTrackSync: index => ipcRenderer.invoke("rea_settracksync", index),
   isTrackSyncing: index => ipcRenderer.invoke("rea_istracksync", index),

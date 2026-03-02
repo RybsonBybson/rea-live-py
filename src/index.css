@@ -333,7 +333,6 @@ menu {
         font-size: 90%;
         font-weight: lighter;
         color: rgb(var(--gray-light));
-        gap: 1rem;
       }
 
       .mess.sys,
@@ -345,6 +344,7 @@ menu {
       .mess.sys {
         justify-content: center;
         font-weight: normal;
+        gap: 1rem;
       }
       .mess.sys::before {
         content: "-----";
@@ -356,10 +356,12 @@ menu {
       .mess.join::before,
       .mess.quit::before {
         content: ">>";
+        margin-right: 1rem;
       }
 
       .mess.join::after {
-        content: " joined :)";
+        margin-left: 0.3rem;
+        content: "joined :)";
       }
     }
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import settings from "settings";
 
 const getTextColor = (r, g, b) => {
   const [R, G, B] = [r, g, b].map(c => c / 255);
@@ -14,6 +15,7 @@ export default function Track({ i = 1, hasName = false, name = "Track 1", hasCol
 
   const enableTrackSync = async () => {
     const result = await window.api.setTrackSync(i - 1);
+    window.api.send({ message: `User ${settings.user.name} set [${name}] ${result ? "⭕" : "⚪"}`, type: "sys" });
     setSyncing(result);
   };
 
@@ -35,7 +37,7 @@ export default function Track({ i = 1, hasName = false, name = "Track 1", hasCol
       clearInterval(sync_interval);
       clearInterval(icon_interval);
     };
-  }, [i, icon]);
+  }, [i, icon, name]);
 
   const rgb = `${r}, ${g}, ${b}`;
   const text = getTextColor(r, g, b);

@@ -5,7 +5,7 @@ import Track from "../templates/Track";
 import Chat from "../templates/Chat";
 
 export default function ReaperConsole() {
-  const { isReaper, communication } = useContext(ReaperContext);
+  const { isReaper, communication, wsConn } = useContext(ReaperContext);
 
   return (
     <main>
@@ -35,9 +35,7 @@ export default function ReaperConsole() {
                 </div>
               </div>
             </div>
-            <div className='col'>
-              <Chat />
-            </div>
+            <div className='col'>{wsConn && <Chat />}</div>
           </div>
         )}
       </div>

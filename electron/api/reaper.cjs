@@ -16,19 +16,13 @@ function reaperRelated() {
     return stdout.includes("reaper.exe");
   });
 
-  ipcMain.handle("rea_isconn", _ => {
+  ipcMain.handle("rea_comms", _ => {
     try {
       const communicate = JSON.parse(fs.readFileSync(communicatePath, "utf-8"));
-      return communicate.connection;
+      return communicate;
     } catch (e) {}
 
     return false;
-  });
-
-  ipcMain.handle("rea_comms", _ => {
-    const communicate = JSON.parse(fs.readFileSync(communicatePath, "utf-8"));
-
-    return communicate;
   });
 
   ipcMain.handle("rea_settracksync", (_, index) => {
