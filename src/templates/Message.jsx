@@ -1,8 +1,8 @@
-export default function Message({ message = "", username = "", type = "" }) {
+export default function Message({ children, username = "", type = "" }) {
   return (
     <div className={type ? `mess ${type}` : "mess"}>
-      {username !== "" ? `${username}: ` : ""}
-      {message}
+      {username !== "" ? `${username}` : ""}
+      {children}
     </div>
   );
 }

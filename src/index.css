@@ -334,6 +334,7 @@ menu {
         font-weight: lighter;
         color: rgb(var(--gray-light));
         gap: 1rem;
+        content: ": ";
       }
 
       .mess.sys,
@@ -356,6 +357,10 @@ menu {
       .mess.join::before,
       .mess.quit::before {
         content: ">>";
+      }
+
+      .mess.join::after {
+        content: " joined :)";
       }
     }
 

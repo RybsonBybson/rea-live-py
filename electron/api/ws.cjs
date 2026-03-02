@@ -1,5 +1,6 @@
 const { ipcMain, BrowserWindow, app } = require("electron");
 const WebSocket = require("ws");
+const fs = require("fs");
 
 // ---- other related
 
@@ -7,6 +8,8 @@ const WebSocket = require("ws");
  * @type {BrowserWindow}
  */
 const mainWindow = app.mainWin;
+const settingsPath = app.settingsPath;
+const settings = JSON.parse(fs.readFileSync(settingsPath));
 const ip = "wss://rea-live-py.onrender.com/";
 /**
  * @type {WebSocket | null}
@@ -21,6 +24,10 @@ function connectWS() {
 
   ws.on("open", () => {
     isConnected = true;
+    ws.send({
+      username: settings.user.name,
+      type: "join_request",
+    });
   });
 
   ws.on("close", () => {
