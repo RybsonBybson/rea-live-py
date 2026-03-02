@@ -15,11 +15,12 @@ const connectedUsers = [];
 
 wss.on("connection", ws => {
   ws.on("message", message => {
-    if (message.type === "joinRequest") {
+    if (message.type === "join_request") {
       ws.id = uuid();
       ws.username = message.username;
       connectedUsers.push(ws);
       ws.send({ username: ws.username, type: "join" });
+      return;
     }
 
     ws.send(message);

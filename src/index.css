@@ -334,7 +334,6 @@ menu {
         font-weight: lighter;
         color: rgb(var(--gray-light));
         gap: 1rem;
-        content: ": ";
       }
 
       .mess.sys,
