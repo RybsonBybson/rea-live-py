@@ -2,13 +2,12 @@ const { app, ipcMain } = require("electron");
 const { exec } = require("child_process");
 const { promisify } = require("util");
 const fs = require("fs");
-const path = require("path");
 
 const execAsync = promisify(exec);
 
 // ---- reaper related
 
-const communicatePath = path.join(app.getAppPath(), "communicate.json");
+const communicatePath = app.communicatePath;
 
 function reaperRelated() {
   ipcMain.handle("rea_ison", async _ => {

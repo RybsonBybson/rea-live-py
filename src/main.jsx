@@ -10,18 +10,18 @@ import settings from "settings";
 function Main() {
   const [site, setSite] = useState("reaconsole");
   const [isReaper, setIsReaper] = useState(false);
-  const [isConnection, setIsConnection] = useState(false);
   const [communication, setCommunication] = useState({});
+  const [wsConn, setWsConn] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(async () => {
       const isReaOn = await window.api.isReaperOn();
-      const isConn = await window.api.isConnection();
       const comms = await window.api.communication();
+      const wsConn = await window.api.connect();
 
       setIsReaper(isReaOn);
-      setIsConnection(isConn);
       setCommunication(comms);
+      setWsConn(wsConn);
     }, settings.prefs.refreshDelay);
 
     return () => clearInterval(interval);
@@ -29,7 +29,7 @@ function Main() {
 
   return (
     <SiteContext.Provider value={{ site, setSite }}>
-      <ReaperContext.Provider value={{ isReaper, isConnection, communication, setIsReaper, setIsConnection, setCommunication }}>
+      <ReaperContext.Provider value={{ isReaper, communication, wsConn }}>
         <Frame />
         {site === "reaconsole" && <ReaperConsole />}
         {site === "settings" && <SettingsPage />}

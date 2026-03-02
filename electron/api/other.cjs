@@ -4,14 +4,11 @@ const fs = require("fs-extra");
 
 // ---- other related
 
-const resourcesFolder = path.join(app.getAppPath(), "public", "resources");
+const publicFolder = app.publicFolder;
+const resourcesFolder = path.join(publicFolder, "resources");
 fs.ensureDirSync(resourcesFolder);
 
 function otherRelated() {
-  ipcMain.handle("o_sendmessage", (_, data) => {
-    return "Odebrano!" + data;
-  });
-
   ipcMain.handle("o_imagefromoutside", (_, p) => {
     if (!fs.existsSync(p)) return "";
 

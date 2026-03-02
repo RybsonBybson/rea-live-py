@@ -11,11 +11,8 @@ const server = http.createServer((req, res) => {
 const wss = new WebSocket.Server({ server });
 
 wss.on("connection", ws => {
-  console.log("Nowy klient połączony");
-
   ws.on("message", message => {
-    console.log("Otrzymano:", message.toString());
-    ws.send(`Echo: ${message}`);
+    ws.send(message);
   });
 
   ws.on("close", () => {

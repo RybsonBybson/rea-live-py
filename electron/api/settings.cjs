@@ -1,10 +1,9 @@
 const { app, ipcMain } = require("electron");
 const fs = require("fs");
-const path = require("path");
 
 // ---- settings related
 
-const settingsPath = path.join(app.getAppPath(), "settings.json");
+const settingsPath = app.settingsPath;
 
 function settingsRelated() {
   ipcMain.handle("sett_save", (event, newSettings) => {

@@ -2,7 +2,6 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
   // -- other
-  sendMessage: msg => ipcRenderer.invoke("o_sendmessage", msg),
   imageFromOutside: p => ipcRenderer.invoke("o_imagefromoutside", p),
   // -- settings
   saveSettings: settings => ipcRenderer.invoke("sett_save", settings),
@@ -21,4 +20,7 @@ contextBridge.exposeInMainWorld("api", {
   setTrackSync: index => ipcRenderer.invoke("rea_settracksync", index),
   isTrackSyncing: index => ipcRenderer.invoke("rea_istracksync", index),
   // -- ws
+  connect: () => ipcRenderer.invoke("ws_conn"),
+  send: data => ipcRenderer.invoke("ws_send", data),
+  onData: callback => ipcRenderer.on("ws_data", (_, data) => callback(data)),
 });

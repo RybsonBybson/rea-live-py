@@ -1,11 +1,12 @@
-const path = require("path");
 const fs = require("fs");
 const os = require("os");
+const { app } = require("electron");
 
 const info = os.userInfo();
 
 function settingscheck() {
-  const settingsPath = path.join(__dirname, "..", "settings.json");
+  const settingsPath = app.settingsPath;
+
   if (!fs.existsSync(settingsPath)) fs.writeFileSync(settingsPath, JSON.stringify({}, null, 2), "utf-8");
 
   const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
@@ -19,6 +20,10 @@ function settingscheck() {
 
   if (!settings.user) settings.user = {};
   if (!settings.user.name) settings.user.name = info.username;
+
+  if (!settings.prefs) settings.prefs = {};
+  if (!settings.prefs.hideToTray) settings.prefs.hideToTray = false;
+  if (!settings.prefs.refreshDelay) settings.prefs.refreshDelay = 1000;
 
   fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2), "utf-8");
 }

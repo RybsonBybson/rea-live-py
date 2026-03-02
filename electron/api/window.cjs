@@ -1,8 +1,14 @@
-const { BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const fs = require("fs");
 
 // ---- window related
+/**
+ * @type {BrowserWindow}
+ */
+const mainWin = app.mainWin;
+const settingsPath = app.settingsPath;
 
-function windowRelated(settings) {
+function windowRelated() {
   ipcMain.handle("win_minimalize", event => {
     const win = BrowserWindow.fromWebContents(event.sender);
     win.minimize();
@@ -14,6 +20,7 @@ function windowRelated(settings) {
   });
   ipcMain.handle("win_close", event => {
     const win = BrowserWindow.fromWebContents(event.sender);
+    const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
     settings.prefs.hideToTray ? win.hide() : win.destroy();
   });
   ipcMain.handle("win_destroy", event => {
@@ -24,6 +31,10 @@ function windowRelated(settings) {
     const win = BrowserWindow.fromWebContents(event.sender);
     win.setAlwaysOnTop(!win.isAlwaysOnTop());
   });
+
+  mainWin.on("maximize", () => mainWin.webContents.send("win_state", "maximized"));
+  mainWin.on("unmaximize", () => mainWin.webContents.send("win_state", "restored"));
+  mainWin.on("always-on-top-changed", () => mainWin.webContents.send("win_pinned", mainWin.isAlwaysOnTop()));
 }
 
 module.exports = { windowRelated };

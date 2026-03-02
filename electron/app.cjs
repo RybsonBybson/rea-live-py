@@ -1,13 +1,19 @@
-const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
+const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
-let settings = require("../settings.json");
+const fs = require("fs");
 const { settingscheck } = require("./settingscheck.cjs");
-const { protocol } = require("electron");
 
-settingscheck();
 const settingsPath = path.join(app.getAppPath(), "settings.json");
 const communicatePath = path.join(app.getAppPath(), "communicate.json");
 const publicFolder = path.join(app.getAppPath(), "public");
+
+app.settingsPath = settingsPath;
+app.communicatePath = communicatePath;
+app.publicFolder = publicFolder;
+
+settingscheck();
+
+const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
 
 const port = settings.server.port;
 const url = `http://localhost:${port}`;
@@ -28,10 +34,9 @@ function createWindow() {
     alwaysOnTop: false,
   });
 
+  app.mainWin = mainWin;
+
   mainWin.loadURL(url);
-  mainWin.on("maximize", () => mainWin.webContents.send("win_state", "maximized"));
-  mainWin.on("unmaximize", () => mainWin.webContents.send("win_state", "restored"));
-  mainWin.on("always-on-top-changed", () => mainWin.webContents.send("win_pinned", mainWin.isAlwaysOnTop()));
 }
 
 function createTray() {
@@ -72,16 +77,18 @@ app.whenReady().then(() => {
   createWindow();
 
   if (settings.prefs.hideToTray) createTray();
+
+  // -- apis
+
+  const { windowRelated } = require("./api/window.cjs");
+  const { otherRelated } = require("./api/other.cjs");
+  const { settingsRelated } = require("./api/settings.cjs");
+  const { reaperRelated } = require("./api/reaper.cjs");
+  const { wsRelated } = require("./api/ws.cjs");
+
+  otherRelated();
+  windowRelated();
+  settingsRelated();
+  reaperRelated();
+  wsRelated();
 });
-
-// -- apis
-
-const { windowRelated } = require("./api/window.cjs");
-const { otherRelated } = require("./api/other.cjs");
-const { settingsRelated } = require("./api/settings.cjs");
-const { reaperRelated } = require("./api/reaper.cjs");
-
-otherRelated();
-windowRelated(settings);
-settingsRelated(settings, settingsPath);
-reaperRelated(communicatePath);

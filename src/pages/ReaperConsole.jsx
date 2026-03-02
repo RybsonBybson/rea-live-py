@@ -5,13 +5,13 @@ import Track from "../templates/Track";
 import Chat from "../templates/Chat";
 
 export default function ReaperConsole() {
-  const { isReaper, isConnection, communication } = useContext(ReaperContext);
+  const { isReaper, communication } = useContext(ReaperContext);
 
   return (
     <main>
       <Menu />
       <div className='area'>
-        {isReaper && isConnection && (
+        {isReaper && communication.connection && (
           <div className='console'>
             <div className='col'>
               <h3>Choose which tracks to send</h3>
