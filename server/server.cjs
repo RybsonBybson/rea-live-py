@@ -16,12 +16,13 @@ const connectedUsers = [];
 wss.on("connection", ws => {
   ws.on("message", message => {
     message = JSON.parse(message);
+    ws.username = message.username;
 
     if (message.type === "join_request") {
-      ws.id = uuid();
-      ws.username = message.username;
       connectedUsers.push(ws);
-      ws.send(JSON.stringify({ username: ws.username, type: "join" }));
+      connectedUsers.forEach(socket => {
+        socket.send(JSON.stringify({ username: ws.username, type: "join" }));
+      });
       return;
     }
 
@@ -29,7 +30,10 @@ wss.on("connection", ws => {
   });
 
   ws.on("close", () => {
-    console.log("Klient rozłączony");
+    connectedUsers.splice(connectedUsers.indexOf(ws), 1);
+    connectedUsers.forEach(socket => {
+      socket.send(JSON.stringify({ username: ws.username, type: "quit" }));
+    });
   });
 });
 

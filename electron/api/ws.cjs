@@ -37,7 +37,6 @@ function connectWS() {
   });
 
   ws.on("error", err => {
-    console.error("WS error:", err);
     isConnected = false;
   });
 

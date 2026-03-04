@@ -13,11 +13,6 @@ function windowRelated() {
     const win = BrowserWindow.fromWebContents(event.sender);
     win.minimize();
   });
-  ipcMain.handle("win_minmax", event => {
-    const win = BrowserWindow.fromWebContents(event.sender);
-    if (win.isMaximized()) win.unmaximize();
-    else win.maximize();
-  });
   ipcMain.handle("win_close", event => {
     const win = BrowserWindow.fromWebContents(event.sender);
     const settings = JSON.parse(fs.readFileSync(settingsPath, "utf-8"));
@@ -32,8 +27,6 @@ function windowRelated() {
     win.setAlwaysOnTop(!win.isAlwaysOnTop());
   });
 
-  mainWin.on("maximize", () => mainWin.webContents.send("win_state", "maximized"));
-  mainWin.on("unmaximize", () => mainWin.webContents.send("win_state", "restored"));
   mainWin.on("always-on-top-changed", () => mainWin.webContents.send("win_pinned", mainWin.isAlwaysOnTop()));
 }
 

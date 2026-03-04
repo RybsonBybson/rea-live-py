@@ -7,6 +7,7 @@ const port = settings.server.port;
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "./",
   plugins: [react()],
   server: {
     hmr: false,

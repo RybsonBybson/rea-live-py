@@ -12,11 +12,6 @@ export default function SettingsPage() {
     save();
   };
 
-  const setPort = e => {
-    settings.server.port = e.target.value;
-    save();
-  };
-
   return (
     <main>
       <Menu />
@@ -29,24 +24,14 @@ export default function SettingsPage() {
           <label>Nickname</label>
           <input type='text' placeholder='Your nickname...' defaultValue={settings.user.name} onInput={setName} />
         </div>
-        <h3>
+        {/* <h3>
           <PaintBrushIcon /> Look
         </h3>
         <hr />
         <h3>
           <AppWindowIcon /> App
         </h3>
-        <hr />
-        <h3>
-          <HardDrivesIcon /> Server
-        </h3>
-        <hr />
-        <div className='settings-item'>
-          <label>Port</label>
-          <input type='number' placeholder='Port...' defaultValue={settings.server.port} onInput={setPort} />
-        </div>
-
-        <div className='settings-item'></div>
+        <hr /> */}
       </div>
     </main>
   );

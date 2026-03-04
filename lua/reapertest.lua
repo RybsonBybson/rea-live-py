@@ -1,4 +1,6 @@
 local json = require('dkjson')
+
+local tmp = os.getenv("TMP")
 local r = reaper
 local delay = 0.5
 local last_time = 0
@@ -11,15 +13,30 @@ function ParentFolder(path)
     end
 end
 
+local function file_exists(path)
+  local f = io.open(path, "r")
+  if f then
+    f:close()
+    return true
+  end
+  return false
+end
+
 local _, script_path = r.get_action_context()
 local dir_path = ParentFolder(script_path)
-local communication_path = ParentFolder(dir_path) .. "/communicate.json"
+local communication_path = tmp .. "/communicate.json"
 local resourcePath = ParentFolder(r.GetProjectPath())
 
 --
 
 
 function get_communication()
+    if not file_exists(communication_path) then
+        local f = io.open(communication_path, 'w')
+        if not f then return end
+        f:write(json.encode({connection = false, tracks = {}}))
+        f:close()
+    end
     local file = io.open(communication_path, 'r')
     if not file then return end
 
@@ -55,6 +72,7 @@ end
 function scantracks()
     local comm = get_communication()
     if not comm then return end
+    if not comm.tracks then comm.tracks = {} end
 
     local tracksAmount = r.CountTracks(0)
     local existingGuids = {}
