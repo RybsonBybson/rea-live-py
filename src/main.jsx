@@ -27,6 +27,8 @@ function Main() {
     }, settings.prefs.refreshDelay);
 
     const handleData = data => {
+      if (!["", "sys", "join", "quit"].includes(data.type)) return;
+
       setMessages(prev => [
         ...prev,
         <Message type={data.type ?? ""} username={data.username ?? ""}>
