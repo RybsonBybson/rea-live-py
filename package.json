@@ -1,0 +1,9 @@
+{
+  "name": "rea-multi",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "ws": "^8.19.0",
+    "uuid": "^13.0.0"
+  }
+}
