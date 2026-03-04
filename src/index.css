@@ -304,7 +304,8 @@ menu {
 }
 
 .chatcontainer {
-  flex: 1;
+  height: 100%;
+  width: 100%;
   padding: 1rem;
   display: flex;
 
@@ -315,53 +316,59 @@ menu {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    scrollbar-color: rgb(var(--gray-dark)) transparent;
-    scrollbar-width: thin;
 
     .chat {
-      padding: 1rem;
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
+      scrollbar-color: rgb(var(--gray-dark)) transparent;
+      scrollbar-width: thin;
+      overflow-y: auto;
+      padding: 1rem;
+      padding-bottom: 0;
 
-      .mess {
+      .container {
         display: flex;
-        width: 100%;
-        font-family: system-ui;
-        font-size: 90%;
-        font-weight: lighter;
-        color: rgb(var(--gray-light));
-      }
+        flex-direction: column;
+        justify-content: start;
+        gap: 0.6rem;
+        max-height: 600px;
 
-      .mess.sys,
-      .mess.join,
-      .mess.quit {
-        color: rgb(var(--gray));
-      }
+        .mess {
+          display: flex;
+          width: 100%;
+          font-family: system-ui;
+          font-size: 90%;
+          font-weight: lighter;
+          color: rgb(var(--gray-light));
+        }
 
-      .mess.sys {
-        justify-content: center;
-        font-weight: normal;
-        gap: 1rem;
-      }
-      .mess.sys::before {
-        content: "-----";
-      }
-      .mess.sys::after {
-        content: "-----";
-      }
+        .mess.sys,
+        .mess.join,
+        .mess.quit {
+          color: rgb(var(--gray));
+        }
 
-      .mess.join::before,
-      .mess.quit::before {
-        content: ">>";
-        margin-right: 1rem;
-      }
+        .mess.sys {
+          justify-content: center;
+          font-weight: normal;
+          gap: 1rem;
+        }
+        .mess.sys::before {
+          content: "-----";
+        }
+        .mess.sys::after {
+          content: "-----";
+        }
 
-      .mess.join::after {
-        margin-left: 0.3rem;
-        content: "joined :)";
+        .mess.join::before,
+        .mess.quit::before {
+          content: ">>";
+          margin-right: 1rem;
+        }
+
+        .mess.join::after {
+          margin-left: 0.3rem;
+          content: "joined :)";
+        }
       }
     }
 
@@ -371,7 +378,7 @@ menu {
       height: 12%;
 
       input {
-        flex: 1;
+        width: 100%;
         border-bottom: none;
         border-top: solid 1px rgb(var(--gray-dark));
         padding-left: 1rem;
